@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/img/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+   
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Nucleo Icons -->
+  <link href="%PUBLIC_URL%/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="%PUBLIC_URL%/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="%PUBLIC_URL%/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link id="pagestyle" href="%PUBLIC_URL%/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+   
+    <title>React Admin Panel</title>
+  </head>
+
+  <style>
+    *{
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .btn-primary{
+      background:linear-gradient(128.72deg, rgba(31, 0, 5, 0.8) 12.54%, #B82748 94.6%)
+    }
+
+    .btn i{
+      color: #fff !important;
+    }
+
+    .sidenav .navbar-brand {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(128.72deg, rgba(31, 0, 5, 0.8) 12.54%, #B82748 94.6%);
+    color: #fff;
+    }
+    
+    .sidenav-header{
+      background: linear-gradient(128.72deg, rgba(31, 0, 5, 0.8) 12.54%, #B82748 94.6%);
+    }
+
+    .text-warning {
+     color: #f598ad !important;
+    }
+
+    body{
+       overflow-x: hidden;
+    }
+  </style>
+  <body>
+    
+    <div id="root"></div>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> -->
+    <!-- BS JavaScript -->
+
+    
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/core/popper.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/core/bootstrap.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/plugins/chartjs.min.js"></script>
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="%PUBLIC_URL%/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+  </body>
+</html>

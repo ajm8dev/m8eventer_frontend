@@ -1,0 +1,15 @@
+.tag-filter{
+    font-size: 14px;
+    padding: 10px 25px;
+    background: linear-gradient(128.72deg, rgba(31, 0, 5, 0.8) 12.54%, #B82748 94.6%);
+    border-radius: 50px;
+    margin-right: 15px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    cursor:pointer;
+    color: #fff;
+}
+
+.table td, .table th {
+    white-space: break-spaces !important;
+}
