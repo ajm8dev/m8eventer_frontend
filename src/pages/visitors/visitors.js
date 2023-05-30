@@ -17,6 +17,23 @@ const Visitors = () => {
 
     const { organization_id } = useParams()
 
+    const [expoDetails, setExpoDetails] = useState([])
+
+    useEffect(() => {
+        axios.get(config.baseurl+'api/organizer/event/'+ event_id_params).then((res) => {
+            console.log('event details ', res.data.data)
+            setExpoDetails(res.data?.data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
+
+    function dateFormatter(dateFrm){
+        const dateObj = new Date(dateFrm);
+        const formattedDate = dateObj.toLocaleDateString();
+        return formattedDate
+    }
+
 
     const navigate = useNavigate();
 
@@ -55,7 +72,11 @@ const Visitors = () => {
         setProoftype(event.target.value);
     }
     
-    const [password, setUerpassword] = useState("");
+    const [password, setUerpassword] = useState("")
+
+    const [toggle, setToggle] = useState(false)
+
+    const [visitorsDetails, setVisitorsDetails] = useState([])
 
     const handleRegister = async () => {
 
@@ -65,6 +86,7 @@ const Visitors = () => {
         }else {
             orgDum = "Bu"
         }
+
         axios.post(config.baseurl+'api/visitors', {
             event_id: event_id_params,
             name: name,
@@ -77,8 +99,8 @@ const Visitors = () => {
             type: humanType,
             organization: organization,
         }).then((res) => {
-            console.log(res.data)
-            navigate('/visitor-registration/qr/'+res.data.data._id+'/'+res.data.data.name+'/'+orgDum)
+            setToggle(!toggle)
+            setVisitorsDetails(res.data.data)  
         }).catch((err) => {
             console.log(err)
         })
@@ -96,6 +118,14 @@ const Visitors = () => {
         }
     }
 
+    useEffect(() => {
+        if(expoDetails != ""){
+            if(visitorsDetails != ""){
+                navigate('/visitor-registration/qr/'+visitorsDetails._id+'/'+visitorsDetails.name+'/'+visitorsDetails.organization+'/'+expoDetails.expo_name+'/'+expoDetails.expo_from_date+'/'+expoDetails.expo_to_date+'/'+expoDetails.venue+'/'+'TIME 11AM - 8PM')
+            }
+        }
+    },[toggle])
+
     return (
         <>
             <main class="main-content  mt-0">
@@ -105,7 +135,7 @@ const Visitors = () => {
                             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                                 <div class="card card-plain">
                                     <div class="card-header pb-0 text-start text-center">
-                                        <span class="ms-1 font-weight-bold logintxtcl " >Jewellery Expo - 2023</span>
+                                        <span class="ms-1 font-weight-bold logintxtcl " >{expoDetails.expo_name + ' - ' + dateFormatter(expoDetails.expo_from_date) + ' ' + dateFormatter(expoDetails.expo_to_date)} </span>
                                     </div>
                                     <div class="card-body">
                                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>

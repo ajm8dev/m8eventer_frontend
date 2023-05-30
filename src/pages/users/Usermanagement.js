@@ -3,15 +3,12 @@ import Header from "../../components/headerbar/Header";
 import "./Usermanagement.css";
 import config from "../../config.json";
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
-import Dropdown from 'react-bootstrap/Dropdown';
 import { useParams } from 'react-router-dom';
-
 
 const Usermanagement = () => {
 
@@ -27,17 +24,7 @@ const Usermanagement = () => {
     let mainEventiId = event_id
     let organizationId = organization_id
 
-    //get login user details
-
-    // useEffect(() => {
-    //     axios.get(config.baseurl + 'api/users/get_all_user_users', {
-    //     }).then((res) => {    
-    //         console.log('get all users ', res.data.data)
-    //         setUserData(res.data.data)
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }, [])
+    const [stateToggler, setStateToggler] = useState([])
 
     // get visitors and users for the event
 
@@ -46,24 +33,90 @@ const Usermanagement = () => {
     useEffect(() => {
         axios.get(config.baseurl + 'api/user-management/' + mainEventiId, {
         }).then((res) => {
-            console.log('event details ', res?.data?.data[0]?.eventDetailsData[0]?.event_name)
-            setUserData(res?.data?.data[0]?.visitorsNdUsersData)
             setEventData(res?.data?.data[0]?.eventDetailsData)
         }).catch((err) => {
             console.log(err)
         })
     }, [])
 
+    //
+
+    useEffect(() => {
+        axios.post(config.baseurl + 'api/users/filtr/all/event', {
+            event_id: mainEventiId
+        }).then((res) => {
+            console.log('filter all results ', res.data.data)
+                if (res.data.data != "") {
+                    let makeArr = []
+                    let theOrganizationName = ""
+                    for (let i = 0; i < res.data.data.length; i++) {
+
+                        if (res.data.data[i].type == 'visitor') {
+                            theOrganizationName = res.data.data[i].organization
+                        } else if (res.data.data[i].type == 'super-admin') {
+                            theOrganizationName = "123"
+                        } else {
+                            theOrganizationName = res.data.data[i].organization
+                        }
+
+                        if (res.data.data[i].type != 'super-admin') {
+                            makeArr.push({
+                                id: res.data.data[i]._id,
+                                username: res.data.data[i].name,
+                                phone_number: res.data.data[i].phone_number,
+                                email: res.data.data[i].email_address,
+                                address: res.data.data[i].location,
+                                type: res.data.data[i].type,
+                                organization: theOrganizationName
+                            })
+                        }
+
+                    }
+                    setUserData(makeArr)
+                } else {
+                    setState('not found')
+                }
+        }).catch((err) => {
+            console.log('err')
+        })
+    },[stateToggler])
+
     const onChangeOfPhoneNumber = (data) => {
         setState('searching...')
         setUserData([])
         if (data != "") {
-            axios.post(config.baseurl + 'api/users/search/by_phone_number', {
-                phone_number: data
+            axios.post(config.baseurl + 'api/users/search/event/phone-number', {
+                phone_number: data,
+                event_id: mainEventiId
             }).then((res) => {
-                console.log(res.data.data)
-                if (res.data.data != undefined) {
-                    setUserData(res.data.data)
+                console.log('search result phone ', res.data.data)
+                if (res.data.data != "") {
+                    let makeArr = []
+                    let theOrganizationName = ""
+                    for (let i = 0; i < res.data.data.length; i++) {
+
+                        if (res.data.data[i].type == 'visitor') {
+                            theOrganizationName = res.data.data[i].organization
+                        } else if (res.data.data[i].type == 'super-admin') {
+                            theOrganizationName = "123"
+                        } else {
+                            theOrganizationName = res.data.data[i].organization
+                        }
+
+                        if (res.data.data[i].type != 'super-admin') {
+                            makeArr.push({
+                                id: res.data.data[i]._id,
+                                username: res.data.data[i].name,
+                                phone_number: res.data.data[i].phone_number,
+                                email: res.data.data[i].email_address,
+                                address: res.data.data[i].location,
+                                type: res.data.data[i].type,
+                                organization: theOrganizationName
+                            })
+                        }
+
+                    }
+                    setUserData(makeArr)
                 } else {
                     setState('not found')
                 }
@@ -71,27 +124,70 @@ const Usermanagement = () => {
                 alert('something went wrong')
             })
         } else {
-            axios.get(config.baseurl + 'api/users/get_all_user_users', {
-            }).then((res) => {
-                console.log(res.data)
-                setUserData(res.data.data)
-            }).catch((err) => {
-            })
+            setStateToggler(!stateToggler)
         }
     }
 
     const onChangeOfName = (data) => {
+
+        if (data != "") {
+            setState('searching...')
+            setUserData([])
+            axios.post(config.baseurl + 'api/users/search/event/name', {
+                event_id: mainEventiId,
+                name: data
+            }).then((res) => {
+                console.log('search result name ', res.data.data)
+                if (res.data.data != "") {
+
+                    let makeArr = []
+                    let theOrganizationName = ""
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+
+                        if (res.data.data[i].type == 'visitor') {
+                            theOrganizationName = res.data.data[i].organization
+                        } else if (res.data.data[i].type == 'super-admin') {
+                            theOrganizationName = "123"
+                        } else {
+                            theOrganizationName = res.data.data[i].organization
+                        }
+
+                        if (res.data.data[i].type != 'super-admin') {
+                            makeArr.push({
+                                id: res.data.data[i]._id,
+                                username: res.data.data[i].name,
+                                phone_number: res.data.data[i].phone_number,
+                                email: res.data.data[i].email_address,
+                                address: res.data.data[i].location,
+                                type: res.data.data[i].type,
+                                organization: theOrganizationName
+                            })
+                        }
+
+                    }
+                    setUserData(makeArr)
+                } else {
+                    setState('not found')
+                }
+            }).catch((err) => {
+
+            })
+        } else {
+            setState('Loading...')
+        }
+
+    }
+
+    const onhandleExhibitor = () => {
         setState('searching...')
         setUserData([])
-        axios.get(config.baseurl + 'api/users/search_filer_name/' + data, {
+        axios.post(config.baseurl + 'api/users/filtr/exhibitors/event', {
+            event_id: mainEventiId
         }).then((res) => {
-            console.log(res.data)
-            console.log(res.data.data)
             if (res.data.data != "") {
-
                 let makeArr = []
                 let theOrganizationName = ""
-
                 for (let i = 0; i < res.data.data.length; i++) {
 
                     if (res.data.data[i].type == 'visitor') {
@@ -99,19 +195,18 @@ const Usermanagement = () => {
                     } else if (res.data.data[i].type == 'super-admin') {
                         theOrganizationName = "123"
                     } else {
-                        theOrganizationName = res.data.data[i].organization.organization_name
+                        theOrganizationName = res.data.data[i].organization
                     }
 
                     if (res.data.data[i].type != 'super-admin') {
                         makeArr.push({
-                            username: res.data.data[i].username,
+                            id: res.data.data[i]._id,
+                            username: res.data.data[i].name,
                             phone_number: res.data.data[i].phone_number,
-                            email: res.data.data[i].email,
-                            address: res.data.data[i].address,
+                            email: res.data.data[i].email_address,
+                            address: res.data.data[i].location,
                             type: res.data.data[i].type,
-                            organization_id: {
-                                organization_name: theOrganizationName
-                            }
+                            organization: theOrganizationName
                         })
                     }
 
@@ -120,37 +215,6 @@ const Usermanagement = () => {
             } else {
                 setState('not found')
             }
-        }).catch((err) => {
-
-        })
-    }
-
-    const onhandleExhibitor = () => {
-        setState('searching...')
-        setUserData([])
-        axios.get(config.baseurl + 'api/users/get_exhibitor_staff_list/' + organizationId, {
-        }).then((res) => {
-            if (res.data.data[0].result.length > 0) {
-                let makeArr = []
-                let theOrganizationName = ""
-                for (let i = 0; i < res.data.data[0].result.length; i++) {
-                    makeArr.push({
-                        username: res.data.data[0].result[i].username,
-                        phone_number: res.data.data[0].result[i].phone_number,
-                        email: res.data.data[0].result[i].email,
-                        address: res.data.data[0].result[i].address,
-                        type: res.data.data[0].result[i].type,
-                        organization_id: {
-                            organization_name: res.data.data[0].organization.organization_name
-                        }
-                    })
-                }
-                setUserData(makeArr)
-            } else {
-                setState('exhibitor details empty...')
-            }
-            console.log('exhibitor organization data', res.data)
-            console.log('exhibitor organization', res.data.data[0].organization.organization_name)
 
         }).catch((err) => {
             setState('searching...')
@@ -162,27 +226,39 @@ const Usermanagement = () => {
     const onhandleOrganizer = () => {
         setState('searching...')
         setUserData([])
-        axios.get(config.baseurl + 'api/users/get_organizer_staff_list/' + organizationId, {
+        axios.post(config.baseurl + 'api/users/filtr/organizer/event',{
+            event_id: mainEventiId
         }).then((res) => {
-            console.log('organization_data ', res.data)
-            console.log(res.data.data[0].result[0].username)
-            console.log('organization organization', res.data.data[0].organization.organization_name)
-            let makeArr = []
-            let theOrganizationName = ""
+            if (res.data.data != "") {
+                let makeArr = []
+                let theOrganizationName = ""
+                for (let i = 0; i < res.data.data.length; i++) {
 
-            for (let i = 0; i < res.data.data[0].result.length; i++) {
-                makeArr.push({
-                    username: res.data.data[0].result[i].username,
-                    phone_number: res.data.data[0].result[i].phone_number,
-                    email: res.data.data[0].result[i].email,
-                    address: res.data.data[0].result[i].address,
-                    type: res.data.data[0].result[i].type,
-                    organization_id: {
-                        organization_name: res.data.data[0].organization.organization_name
+                    if (res.data.data[i].type == 'visitor') {
+                        theOrganizationName = res.data.data[i].organization
+                    } else if (res.data.data[i].type == 'super-admin') {
+                        theOrganizationName = "123"
+                    } else {
+                        theOrganizationName = res.data.data[i].organization
                     }
-                })
+
+                    if (res.data.data[i].type != 'super-admin') {
+                        makeArr.push({
+                            id: res.data.data[i]._id,
+                            username: res.data.data[i].name,
+                            phone_number: res.data.data[i].phone_number,
+                            email: res.data.data[i].email_address,
+                            address: res.data.data[i].location,
+                            type: res.data.data[i].type,
+                            organization: theOrganizationName
+                        })
+                    }
+
+                }
+                setUserData(makeArr)
+            } else {
+                setState('not found')
             }
-            setUserData(makeArr)
 
         }).catch((err) => {
 
@@ -192,33 +268,39 @@ const Usermanagement = () => {
     const onhandleVisitors = () => {
         setState('searching...')
         setUserData([])
-        axios.get(config.baseurl + 'api/users/get_all_visitors/' + mainEventiId, {
+        axios.post(config.baseurl + 'api/users/filtr/visitors/event', {
+            event_id: mainEventiId
         }).then((res) => {
-            console.log('visitor_data ', res.data)
-            console.log(res.data.data[0].username)
-            let makeArr = []
-            let theOrganizationName = ""
+            if (res.data.data != "") {
+                let makeArr = []
+                let theOrganizationName = ""
+                for (let i = 0; i < res.data.data.length; i++) {
 
-            for (let i = 0; i < res.data.data.length; i++) {
-
-                if (res.data.data[i].organization != "") {
-                    theOrganizationName = res.data.data[i].organization
-                } else {
-                    theOrganizationName = ""
-                }
-
-                makeArr.push({
-                    username: res.data.data[i].username,
-                    phone_number: res.data.data[i].phone_number,
-                    email: res.data.data[i].email,
-                    address: res.data.data[i].address,
-                    type: res.data.data[i].type,
-                    organization_id: {
-                        organization_name: theOrganizationName
+                    if (res.data.data[i].type == 'visitor') {
+                        theOrganizationName = res.data.data[i].organization
+                    } else if (res.data.data[i].type == 'super-admin') {
+                        theOrganizationName = "123"
+                    } else {
+                        theOrganizationName = res.data.data[i].organization
                     }
-                })
+
+                    if (res.data.data[i].type != 'super-admin') {
+                        makeArr.push({
+                            id: res.data.data[i]._id,
+                            username: res.data.data[i].name,
+                            phone_number: res.data.data[i].phone_number,
+                            email: res.data.data[i].email_address,
+                            address: res.data.data[i].location,
+                            type: res.data.data[i].type,
+                            organization: theOrganizationName
+                        })
+                    }
+
+                }
+                setUserData(makeArr)
+            } else {
+                setState('not found')
             }
-            setUserData(makeArr)
 
         }).catch((err) => {
 
@@ -226,17 +308,44 @@ const Usermanagement = () => {
     }
 
     const onhandleAllusers = () => {
-        axios.get(config.baseurl + 'api/users/get_all_user_users', {
+        axios.post(config.baseurl + 'api/users/filtr/all/event', {
+            event_id: mainEventiId
         }).then((res) => {
-            console.log(res.data)
-            setUserData(res.data.data)
+            console.log('filter all results ', res.data.data)
+                if (res.data.data != "") {
+                    let makeArr = []
+                    let theOrganizationName = ""
+                    for (let i = 0; i < res.data.data.length; i++) {
+
+                        if (res.data.data[i].type == 'visitor') {
+                            theOrganizationName = res.data.data[i].organization
+                        } else if (res.data.data[i].type == 'super-admin') {
+                            theOrganizationName = "123"
+                        } else {
+                            theOrganizationName = res.data.data[i].organization
+                        }
+
+                        if (res.data.data[i].type != 'super-admin') {
+                            makeArr.push({
+                                id: res.data.data[i]._id,
+                                username: res.data.data[i].name,
+                                phone_number: res.data.data[i].phone_number,
+                                email: res.data.data[i].email_address,
+                                address: res.data.data[i].location,
+                                type: res.data.data[i].type,
+                                organization: theOrganizationName
+                            })
+                        }
+
+                    }
+                    setUserData(makeArr)
+                } else {
+                    setState('not found')
+                }
         }).catch((err) => {
             console.log('err')
         })
     }
-
-    
-      
 
     return (
         <>
@@ -251,38 +360,9 @@ const Usermanagement = () => {
                                 <div class="card-header pb-3">
                                     <div class="row">
                                         <div class="">
-                                            <h6 class="mb-0" style={{ fontSize: '24px' }}>USERS LIST</h6>
+                                            <h6 class="mb-0" style={{ fontSize: '24px' }}>USERS LIST</h6><br></br>
                                         </div>
                                     </div>
-                                    <br></br>
-                                    {/* <div class="row">
-                                        <div class="col-xl-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p>Total Users</p>
-                                                    <h1>172</h1>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p>Total Exhibitors Staffs</p>
-                                                    <h1>62</h1>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p>Total Organizer Staffs</p>
-                                                    <h1>32</h1>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    <br></br>
-                                    {/* <button onClick={handleGetValue}>click Me</button> */}
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
@@ -348,11 +428,11 @@ const Usermanagement = () => {
                                                             userData.map((item, index) =>
                                                                 <>
                                                                     <tr>
-                                                                        <td>{item?.name}</td>
+                                                                        <td>{item?.username}</td>
                                                                         <td>{item?.email}</td>
                                                                         <td>{item?.address}</td>
                                                                         <td>{item?.type}</td>
-                                                                        <td><a href={'/visitor-registration/qr/' + item?.id + '/' + item?.name + '/' + item?.organization_name + '/'+ eventData[0]?.event_name + '/' + eventData[0]?.event_from_date +'/' + eventData[0]?.event_to_date +'/'+eventData[0]?.event_venue+'/'+'TIME 11AM - 8PM'}>print</a></td>
+                                                                        <td><a href={'/visitor-registration/qr/' + item?.id + '/' + item?.username + '/' + item?.organization + '/' + eventData[0]?.event_name + '/' + eventData[0]?.event_from_date + '/' + eventData[0]?.event_to_date + '/' + eventData[0]?.event_venue + '/' + 'TIME 11AM - 8PM'}>print</a></td>
                                                                     </tr>
                                                                 </>
                                                             ) : <p>{state}</p>

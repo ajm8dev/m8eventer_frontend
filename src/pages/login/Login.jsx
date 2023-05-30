@@ -23,14 +23,19 @@ const Login =() => {
             Authorization: 'Bearer '+token
           }
         }).then((res) => {
-          console.log('auth data ', res.data.data)
           if(res.data.data.type == 'organizer' & res.data.data.role == 'ADMIN'){
+
+            console.log('res.data.data ', res.data.data)
+
+            
             localStorage.setItem('token', token);
             localStorage.setItem('role', res.data.data.role)
             localStorage.setItem('organization_id', res.data.data.organizations.organization_id)
             localStorage.setItem('user_id', res.data.data._id)
             navigate('/event')
           }else if(res.data.data.role == 'STAFF'){
+
+             
 
               localStorage.setItem('token', token);
               localStorage.setItem('role', res.data.data.role)

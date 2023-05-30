@@ -405,7 +405,6 @@ const Event = () => {
         var complementExtraArr = []
 
         const extraComplementaryFunction = () => {
-            console.log("addMoreComplementaryCount" + addMoreComplementaryCount)
 
             for (let i = 0; i < addMoreComplementaryCount; i++) {
                 var complementryName = document.querySelector("input[name='cmpname-" + i + "']")
@@ -433,15 +432,14 @@ const Event = () => {
                 }
             }
         }
-
+        
         extraComplementaryFunction()
         setComplementData(complementArr)
         setComplementExtraData(complementExtraArr)
     }
 
     useEffect(() => {
-        console.log('event id', eventId)
-        if (complementData != "") {
+        if (complementData != '' || complementExtraData != '') {
             axios.post(config.baseurl + 'api/organizer/complimentary/complementary-data-fr-event', {
                 "event_id": eventId,
                 "complement_data": complementData,
@@ -455,9 +453,8 @@ const Event = () => {
                 console.log(err)
                 setLoader(false)
             })
-            console.log("Complement Data" + JSON.stringify(complementData))
         }
-    }, [complementData])
+    }, [complementData, complementExtraData])
 
 
     // Add More Complementary Functions
@@ -580,16 +577,16 @@ const Event = () => {
                                                                     <td>{i + 1}</td>
                                                                     <td >
                                                                         <div>
-                                                                            <p>{data.expo_name}</p>
+                                                                            <h5>{data.expo_name}</h5>
                                                                             {/* <p>{data.description}</p> */}
-                                                                            <p>Total Stalls: {data.total_stalls}</p>
+                                                                            <p style={{marginTop: '30px', marginBottom: '0px'}}>Total Stalls: {data.total_stalls}</p>
                                                                             <p>Available Stalls: {data.available_stalls}</p>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <a href={'./event/event-edit/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-primary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>View & Update</Button></a>
                                                                         <a href={'/super-admin/user-management/' + localStorage.getItem('organization_id') + '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>User Management</Button></a>
-                                                                        <a href={'/visitor-registration/' + localStorage.getItem('organization_id') + '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Registration</Button></a>
+                                                                        <a href={'/visitor-registration/' + localStorage.getItem('organization_id')+ '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Registration</Button></a>
                                                                     </td>
                                                                 </tr>
                                                             )
@@ -625,8 +622,6 @@ const Event = () => {
                             }
                         </div>
                     </div>
-                    <br></br>
-                    <br></br>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="mb-3">
@@ -714,14 +709,14 @@ const Event = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <form class="needs-validation">
-                        <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        {/* <div class="alert alert-warning d-flex align-items-center" role="alert">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
                                 <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </svg>
                             <div>
-                                <p class="alert-para mb-0">Note: Totally 40 Stalls Created, In Default Undefined Stalls are Not Available For Further Process</p>
+                                <p class="alert-para mb-0">Note: Totally {totalStalls} Stalls Created, In Default Undefined Stalls are Not Available For Further Process</p>
                             </div>
-                        </div>
+                        </div> */}
                         {/* <div class="row">
                             <div class="col-xl-4">
                                 <input class="form-control mb-2 mx-2" placeholder="layout" value="Layout-1"></input>
@@ -740,9 +735,9 @@ const Event = () => {
                             <div class="col-xl-12">
                                 <div class="alert alert-warning para-all-fff" role="alert">
                                     <p class="mb-0">Total Stalls Created, {totalStalls}</p>
-                                    <p class="mb-0">Total Stalls Allocated</p>
+                                    {/* <p class="mb-0">Total Stalls Allocated</p>
                                     <p class="mb-0">Un Allocated Stalls, 24</p>
-                                    <p class="mb-0">Total Sq Occupied 3400 sq</p>
+                                    <p class="mb-0">Total Sq Occupied 3400 sq</p> */}
                                     <p class="mb-0">Total Price, ₹ {totalPriceValue}</p>
                                 </div>
                             </div>

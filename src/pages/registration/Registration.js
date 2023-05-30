@@ -29,9 +29,9 @@ const Registration = () => {
     const [countryCode, setCountryCode] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [emailId, setEmailId] = useState('')
-    const [password, setPassword] = useState('1234567890')
+    const [password, setPassword] = useState('')
     const [address, setAddress] = useState('')
-    const [createdBy, setCreatedBy] = useState('6377502a9c6ccc54d44e6c78')
+    const [createdBy, setCreatedBy] = useState('')
 
 
     const [organization, setOrganization] = useState('bu')
@@ -61,24 +61,7 @@ const Registration = () => {
 
     //
 
-    axios.post('api/user', {
-        username: userName,
-        emp_id: employeeId,
-        country_code: countryCode,
-        phone_number: phoneNumber,
-        email: emailId,
-        password: password,
-        address: address,
-        role:role,
-        type:type,
-        organization_id: organization,
-        createdBy: createdBy
-    }).then((res) => {
-        alert(res.data.data)
-    }).catch((err) => {
-        alert(err)
-    })
-
+   
     //Modals
 
     const [registrationModal, setRegistrationModal] = useState(false)
@@ -181,7 +164,6 @@ const Registration = () => {
                             <div class="mb-3">
                                 <label>Organization</label>
                                 <select class="form-control" value={organization} onChange={(event) => handleOrganization(event)}>
-                                    {/* <option value="">Choose an organization</option> */}
                                     {
                                         organizationData.map((data) => {
                                             return (
@@ -194,8 +176,6 @@ const Registration = () => {
 
                             <div class="mb-3">
                                 <label for="role" class="form-label">role</label>
-                                {/* <input type="text" class="form-control" id="role" placeholder="eg. admin | manager | marketer | security" /> */}
-
                                 <select class="form-control" value={role} onChange={(event) => handleRoleChange(event)}>
                                     <option value="">select</option> 
                                     <option value="ADMIN">Admin</option>
@@ -226,9 +206,6 @@ const Registration = () => {
                     <Button type="submit" variant="primary" onClick={handleSubmit}>
                         Create user
                     </Button>
-                    {/* <Button variant="success" onClick={triggerStallCreationModal}>
-                        Absolute Next
-                    </Button> */}
                 </Modal.Footer>
             </Modal>
         </>

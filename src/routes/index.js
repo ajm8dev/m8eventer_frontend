@@ -12,6 +12,7 @@ import UserRegistration from '../pages/registration/Registration'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Usermanagement from '../pages/users/Usermanagement'
 import EventType from '../pages/master/EventType'
+import Dashboard from '../pages/dashboard/index'
 
 const routeList = () => {
     return (
@@ -20,6 +21,7 @@ const routeList = () => {
                 <Route path="/">
                     <Route index element={<Login />} />
                     <Route path="home" element={<Home />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="event" element={<Event />} />
                     <Route path="master" element={<Master />} />
                     <Route path="stall-master" element={<MasterStall />} />

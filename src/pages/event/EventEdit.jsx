@@ -134,9 +134,6 @@ const EventEdit = () => {
     }, [stallRefresh])
 
 
-
-
-
     // Get Event Gallery Images
 
     const [galleryImagesData, setGalleryImagesData] = useState([])
@@ -676,68 +673,64 @@ const EventEdit = () => {
 
     const updateComplimentaryFun = () => {
 
-        if(complimentaryData != "" && complimentaryData != undefined){
-
-
-        setAddMoreComplementaryData([])
-
-        if (complimentaryData.length > 0) {
-
-            let setStallCreationArr = []
-
-            for (let i = 0; i < complimentaryData.length; i++) {
-                setStallCreationArr.push(<div class="d-flex mt-3">
-                    <input class="form-control mb-2 mx-2" placeholder="stall no" name={"stallno-" + i} value={i + 1} disabled></input>
-                    <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary name id" name={"cmpnameid-" + i} value={complimentaryData[i]?.complimentary_id?._id} disabled></input>
-                    <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary data id" name={"cmpdataid-" + i} value={complimentaryData[i]?._id} disabled></input>
-                    <input id={i} class="form-control mb-2 mx-2" placeholder="complimentary name" name={"cmpname-" + i} defaultValue={complimentaryData[i]?.complimentary_id?.complimentary_name} disabled></input>
-                    <input id={i} class="form-control mb-2 mx-2" placeholder="Free qty" name={"freeqty-" + i} defaultValue={complimentaryData[i]?.free_qty}></input>
-                    <input id={i} class="form-control mb-2 mx-2" placeholder="Price" name={"price-" + i} defaultValue={complimentaryData[i]?.extra_amount_fr_eac_qty}></input>
-
-                    <div class="form-check form-switch mx-2" style={{display: 'none'}}>
-                        <input id={i} class="form-check-input" type="checkbox" name={"compactivein-" + i} defaultChecked={true} />
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
-                    </div>
-                </div>)
-            }
-
-            setStallCreationFormArr(setStallCreationArr)
-
-        }else {
-            axios.get(config.baseurl + 'api/organizer/complimentary-data').then((res) => {
-
+            if(complimentaryData != "" && complimentaryData != undefined){
+            setAddMoreComplementaryData([])
+            if (complimentaryData.length > 0) {
                 let setStallCreationArr = []
+                for (let i = 0; i < complimentaryData.length; i++) {
+                    setStallCreationArr.push(<div class="d-flex mt-3">
+                        <input class="form-control mb-2 mx-2" placeholder="stall no" name={"stallno-" + i} value={i + 1} disabled></input>
+                        <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary name id" name={"cmpnameid-" + i} value={complimentaryData[i]?.complimentary_id?._id} disabled></input>
+                        <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary data id" name={"cmpdataid-" + i} value={complimentaryData[i]?._id} disabled></input>
+                        <input id={i} class="form-control mb-2 mx-2" placeholder="complimentary name" name={"cmpname-" + i} defaultValue={complimentaryData[i]?.complimentary_id?.complimentary_name} disabled></input>
+                        <input id={i} class="form-control mb-2 mx-2" placeholder="Free qty" name={"freeqty-" + i} defaultValue={complimentaryData[i]?.free_qty}></input>
+                        <input id={i} class="form-control mb-2 mx-2" placeholder="Price" name={"price-" + i} defaultValue={complimentaryData[i]?.extra_amount_fr_eac_qty}></input>
 
-                setUnAssignedComplimentaryCount(res.data.data.length)
-
-                for (let i = 0; i < res.data.data.length; i++) {
-                    setStallCreationArr.push(
-                        <div>
-                            <div class="d-flex mt-3">
-                                <input class="form-control mb-2 mx-2" placeholder="stall no" name={"stallno-" + i} value={i + 1} disabled></input>
-                                <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary name id" name={"unacmpnameid-" + i} value={res.data.data[i]._id} disabled></input>
-                                <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary data id" name={"unacmpdataid-" + i} value={res.data.data[i]._id} disabled></input>
-                                <input id={i} class="form-control mb-2 mx-2" placeholder="complimentary name" name={"unacmpname-" + i} defaultValue={res.data.data[i].complimentary_id.complimentary_name} disabled></input>
-                                <input id={i} class="form-control mb-2 mx-2" placeholder="Free qty" name={"unafreeqty-" + i}></input>
-                                <input id={i} class="form-control mb-2 mx-2" placeholder="Price" name={"unaprice-" + i}></input>
-
-                                <div class="form-check form-switch mx-2">
-                                    <input id={i} class="form-check-input" type="checkbox" name={"unacompactivein-" + i} defaultChecked={false} />
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
-                                </div>
-                            </div>
-                        </div>)
+                        <div class="form-check form-switch mx-2" style={{display: 'none'}}>
+                            <input id={i} class="form-check-input" type="checkbox" name={"compactivein-" + i} defaultChecked={true} />
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                        </div>
+                    </div>)
                 }
-
                 setStallCreationFormArr(setStallCreationArr)
 
-            }).catch((err) => {
-                console.log(err)
-            })
+            }else {
+                axios.get(config.baseurl + 'api/organizer/complimentary-data').then((res) => {
+
+                    let setStallCreationArr = []
+                    setUnAssignedComplimentaryCount(res.data.data.length)
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        setStallCreationArr.push(
+                            <div>
+                                <div class="d-flex mt-3">
+                                    <input class="form-control mb-2 mx-2" placeholder="stall no" name={"stallno-" + i} value={i + 1} disabled></input>
+                                    <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary name id" name={"unacmpnameid-" + i} value={res.data.data[i]._id} disabled></input>
+                                    <input class="form-control mb-2 mx-2" type='hidden' placeholder="complimentary data id" name={"unacmpdataid-" + i} value={res.data.data[i]._id} disabled></input>
+                                    <input id={i} class="form-control mb-2 mx-2" placeholder="complimentary name" name={"unacmpname-" + i} defaultValue={res.data.data[i].complimentary_id.complimentary_name} disabled></input>
+                                    <input id={i} class="form-control mb-2 mx-2" placeholder="Free qty" name={"unafreeqty-" + i}></input>
+                                    <input id={i} class="form-control mb-2 mx-2" placeholder="Price" name={"unaprice-" + i}></input>
+
+                                    <div class="form-check form-switch mx-2">
+                                        <input id={i} class="form-check-input" type="checkbox" name={"unacompactivein-" + i} defaultChecked={false} />
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                                    </div>
+                                </div>
+                            </div>)
+                    }
+
+                    setStallCreationFormArr(setStallCreationArr)
+
+                }).catch((err) => {
+                    console.log(err)
+                })
+            }
+
+            //handleOpenUpdateComplimentaryModal()
+           
         }
 
         handleOpenUpdateComplimentaryModal()
-    }
+        
     }
 
 
@@ -1019,11 +1012,11 @@ const EventEdit = () => {
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Event Start Date</td>
-                                                                                    <td>{eventDatesFrom}</td>
+                                                                                    <td>{new Date(eventDatesFrom).toLocaleDateString()}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Event End Date</td>
-                                                                                    <td>{eventDatesTo}</td>
+                                                                                    <td>{new Date(eventDatesTo).toLocaleDateString()}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Description</td>
