@@ -1,5 +1,5 @@
 {
-    "baseurl": "http://localhost:4523/",
-    "baseurl__": "https://apim8event.m8itsolutions.in/",
-    "baseurl_": "http://139.59.22.213:4523/"
+
+    "baseurl__": "http://localhost:4523/",
+    "baseurl": "https://apim8event.m8itsolutions.in/",
 }
