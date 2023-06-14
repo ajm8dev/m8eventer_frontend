@@ -75,16 +75,19 @@ const Visitors = () => {
                                 <div class="card card-plain" ref={componentRef}>
                                     <div class="card-body" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '184px'}}>
                                         <div>
-                                            <div>
-                                                <p style={{ fontSize: '18px', marginBottom: '2px',  fontWeight: 'bold', textTransform: 'uppercase'}}>{event_name}</p>
-                                                <p style={{ fontSize: '16px', marginBottom: '2px', fontWeight: 'bold' }}>{dateFrmCal(event_fr_date) +' - '+ dateToCal(event_to_date)+' ,'+ yearCal(event_fr_date)}</p>
-                                                <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_location}</p>
-                                                <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_time}</p>
-                                                <h2 style={{ textTransform: 'capitalize', marginTop: '10px',fontSize: '28px' }}>{name}</h2>
+                                            <div style={{display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'}}>
+                                                {/* <p style={{ fontSize: '18px', marginBottom: '2px',  fontWeight: 'bold', textTransform: 'uppercase'}}>{event_name}</p> */}
+                                                <p style={{ fontSize: '14px',marginBottom: '2px', fontWeight: '400' }}>{dateFrmCal(event_fr_date) +' - '+ dateToCal(event_to_date)+' ,'+ yearCal(event_fr_date)}</p>
+                                                <h3 style={{ fontSize: '16px', margin: '10px 0', fontWeight: '600', padding: '8px 0', borderRadius: '30px', background: '#f0f0f0', display: 'flex', width: '41%', alignItems: 'center', justifyContent: 'center' }}>HOTEL RADISSON - SALEM</h3>
+                                                {/* <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_location}</p> */}
+                                                {/* <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_time}</p>  */}
+                                                <h2 style={{ textTransform: 'capitalize', marginTop: '20px', fontSize: '28px' }}>{name}</h2>
                                                 <h5>{organization}</h5>
-                                                <div style={{ height: "auto", marginTop: '20px'}}>
+                                                <div style={{ height: 'auto', marginTop: '20px', padding: '10px', borderRadius: '8px', border: '1px solid #d6d6d6'}}>
                                                     <QRCode
-                                                        size={125}
+                                                        size={80}
                                                         value={id}
                                                     />
                                                 </div>

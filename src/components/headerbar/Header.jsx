@@ -53,14 +53,13 @@ const Headerbar = () => {
           </div>
         </div>
       </nav> */}
-      {/* <div class="row">
+      <div class="row mt-3">
         <div class="col-xl-10">
-
         </div>
         <div class="col-xl-2" style={{ textAlign: 'right', paddingRight: '37px' }}>
           <button type="button" class="btn btn-primary  mb-0" onClick={logoutfun}>Logout</button>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

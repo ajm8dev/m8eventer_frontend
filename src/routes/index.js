@@ -1,6 +1,7 @@
 import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
 import Event from "../pages/event/Event";
+import StaffMain from "../pages/staffs/main";
 import Master from "../pages/master/Master";
 import MasterStall from "../pages/master/stall_master"
 import EventEdit from '../pages/event/EventEdit'
@@ -23,6 +24,7 @@ const routeList = () => {
                     <Route path="home" element={<Home />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="event" element={<Event />} />
+                    <Route path="staff/main" element={<StaffMain />} />
                     <Route path="master" element={<Master />} />
                     <Route path="stall-master" element={<MasterStall />} />
                     <Route path="event/event-edit/:mainEventId" element={<EventEdit />} />
