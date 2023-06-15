@@ -1,0 +1,109 @@
+.modal-dialog{
+    min-width: 60%;
+}
+
+.alert-para{
+    color:#fff
+}
+
+.para-all-fff{
+    color: #fff
+}
+
+.stall-box{
+    height: 340px;
+    overflow-y: scroll;
+}
+
+.stall-layout-box{
+    width: 120px;
+    height: 120px;
+    border: 1px solid #B82748;
+    border-radius: 8px;
+    margin: 15px 15px 10px 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.stall-count{
+    background: #FFDFE6;
+    width: 75px;
+    height: 25px;
+    font-size: 14px;
+    color: #B82748;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.stall-grid{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event-gallery-img{
+    width: 240px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label{
+    text-transform: uppercase;
+}
+
+.react-datepicker-wrapper input {
+    width: 100%;
+    border: 1px solid #d2d6da;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.stall-box-footer{
+    justify-content: space-between;
+}
+
+.gallery-images-layout-box{
+    position: relative;
+}
+
+.gallery-image-icon-edit{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #659d65 !important;
+}
+
+.gallery-image-icon-del{
+    position: absolute;
+    top: 0;
+    left: 5%;
+    padding: 10px;
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    color: red;
+}
+
+td p{
+    font-size: 14px;
+}
+
+.bg-primary{
+    background: #fff
+}
+

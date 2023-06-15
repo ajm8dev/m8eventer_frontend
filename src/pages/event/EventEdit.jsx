@@ -232,7 +232,7 @@ const EventEdit = () => {
                     <input id={superCount} class="form-control mb-2 mx-2" placeholder="height" type="number" name={"height-" + superCount} defaultValue={res.data.data[i].height} onChange={(e) => { handleChangeSinglePost(e.target.value, e.target.id) }}></input>
                     <div class="input-group">
                         <span class="input-group-text mb-2" id="price-batch">₹</span>
-                        <input id={superCount} class="form-control mb-2" type="number" aria-label="Price" name={"price-" + superCount} aria-describedby="price-batch" defaultValue={res.data.data[i]?.price} disabled></input>
+                        <input id={superCount} class="form-control mb-2" type="number" aria-label="Price" name={"price-" + superCount} aria-describedby="price-batch" defaultValue={res.data.data[i]?.price}></input>
                     </div>
                 </div>
                 )
@@ -268,7 +268,7 @@ const EventEdit = () => {
                         <input id={superCount} class="form-control mb-2 mx-2" placeholder="height" type="number" name={"height-" + superCount} defaultValue={res.data.data[i].height} onChange={(e) => { handleChangeSinglePost(e.target.value, e.target.id) }}></input>
                         <div class="input-group">
                             <span class="input-group-text mb-2" id="price-batch">₹</span>
-                            <input id={superCount} class="form-control mb-2" type="number" aria-label="Price" name={"price-" + superCount} aria-describedby="price-batch" defaultValue={res.data.data[i]?.price} disabled></input>
+                            <input id={superCount} class="form-control mb-2" type="number" aria-label="Price" name={"price-" + superCount} aria-describedby="price-batch" defaultValue={res.data.data[i]?.price}></input>
                         </div>
                     </div>
                     )
@@ -1264,7 +1264,7 @@ const EventEdit = () => {
                                 <div>
                                     {/* <Button class="btn btn-secondary" onClick={getRandomValue}>getRandomValue</Button> */}
                                     {/* <Button class="btn btn-secondary mx-2" onClick={checkVal}>check value</Button> */}
-                                    <Button class="btn btn-secondary mx-2" onClick={handleUpdateEventStallModlClose}>
+                                    <Button class="btn btn-secondary" onClick={handleUpdateEventStallModlClose} style={{marginRight: '10px'}}>
                                         Close
                                     </Button>
                                     <Button class="btn btn-primary mx-2" onClick={submtStallUpdate}>

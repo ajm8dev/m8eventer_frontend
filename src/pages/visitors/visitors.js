@@ -186,8 +186,15 @@ const Visitors = () => {
                                                     onChange={(e) => { setUserlocation(e.target.value); }} required />
                                             </div>
 
+
+                                            
+
                                             <div class="text-center">
-                                                <button type="button" onClick={handleRegister} class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Register</button>
+                                                <button type="button" onClick={handleRegister} class="btn btn-lg btn-primary btn-lg w-100 mt-3 mb-0">Register</button>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="button"onClick={() => navigate(-1)} class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Back to Home</button>
                                             </div>
 
                                             <button type="button" class="btn btn-secondary w-100 mt-3 mb-0" onClick={logoutfun}>Logout</button>
