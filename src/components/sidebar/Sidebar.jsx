@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import "./sidebar.scss";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
 

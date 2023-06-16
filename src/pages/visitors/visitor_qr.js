@@ -12,7 +12,7 @@ import ReactToPrint from 'react-to-print';
 
 
 const Visitors = () => {
-    
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -22,7 +22,7 @@ const Visitors = () => {
     const { name } = useParams()
     const { organization } = useParams()
     const { event_name } = useParams()
-    const { event_fr_date } = useParams() 
+    const { event_fr_date } = useParams()
     const { event_to_date } = useParams()
     const { event_location } = useParams()
     const { event_time } = useParams()
@@ -39,29 +39,29 @@ const Visitors = () => {
     function dateFrmCal(dateString) {
         const date = new Date(dateString);
         const options = {
-          month: 'long',
-          day: 'numeric',
+            month: 'long',
+            day: 'numeric',
         };
         return date.toLocaleString('en-US', options);
-      }
+    }
 
-      function dateToCal(dateString) {
+    function dateToCal(dateString) {
         const date = new Date(dateString);
         const options = {
-          day: 'numeric',
+            day: 'numeric',
         };
         return date.toLocaleString('en-US', options);
-      }
+    }
 
-      function yearCal(dateString){
+    function yearCal(dateString) {
         const date = new Date(dateString);
         const options = {
-          year: 'numeric',
+            year: 'numeric',
         };
         return date.toLocaleString('en-US', options);
-      }
+    }
 
-      
+
 
     const componentRef = useRef();
 
@@ -73,19 +73,22 @@ const Visitors = () => {
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 d-flex flex-column mx-lg-0 mx-auto">
                                 <div class="card card-plain" ref={componentRef}>
-                                    <div class="card-body" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '184px'}}>
+                                    <div class="card-body" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '184px' }}>
                                         <div>
-                                            <div style={{display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'}}>
+                                            <div style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                marginTop: '5px'
+                                            }}>
                                                 {/* <p style={{ fontSize: '18px', marginBottom: '2px',  fontWeight: 'bold', textTransform: 'uppercase'}}>{event_name}</p> */}
-                                                <p style={{ fontSize: '14px',marginBottom: '2px', fontWeight: '400' }}>{dateFrmCal(event_fr_date) +' - '+ dateToCal(event_to_date)+' ,'+ yearCal(event_fr_date)}</p>
-                                                <h3 style={{ fontSize: '16px', margin: '10px 0', fontWeight: '600', padding: '8px 0', borderRadius: '30px', background: '#f0f0f0', display: 'flex', width: '41%', alignItems: 'center', justifyContent: 'center' }}>HOTEL RADISSON - SALEM</h3>
+                                                <p style={{ fontSize: '14px', marginBottom: '2px', fontWeight: '600', color: '#000' }}>{dateFrmCal(event_fr_date) + ' - ' + dateToCal(event_to_date) + ' ,' + yearCal(event_fr_date)}</p>
+                                                <h3 style={{ fontSize: '16px', margin: '5px 0', fontWeight: '600', color: '#000', padding: '8px 0', display: 'flex', width: '41%', alignItems: 'center', justifyContent: 'center' }}>HOTEL RADISSON - SALEM</h3>
                                                 {/* <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_location}</p> */}
                                                 {/* <p style={{ fontSize: '16px', marginBottom: '2px',  fontWeight: 'bold' }}>{event_time}</p>  */}
-                                                <h2 style={{ textTransform: 'capitalize', marginTop: '20px', fontSize: '28px' }}>{name}</h2>
-                                                <h5>{organization}</h5>
-                                                <div style={{ height: 'auto', marginTop: '20px', padding: '10px', borderRadius: '8px', border: '1px solid #d6d6d6'}}>
+                                                <h2 style={{ textTransform: 'capitalize', marginTop: '5px', fontSize: '28px', color: '#000' }}>{name}</h2>
+                                                <h6 style={{color: '#000'}}>{organization}</h6>
+                                                <div style={{ height: 'auto', marginTop: '20px', padding: '10px', borderRadius: '8px', border: '1px solid #d6d6d6' }}>
                                                     <QRCode
                                                         size={80}
                                                         value={id}
