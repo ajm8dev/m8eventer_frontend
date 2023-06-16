@@ -11,7 +11,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh "sudo cp -r ${WORKSPACE}/build/* /home/m8itsol/public_html/m8event-admin"
+                sh "sudo cp -r ${WORKSPACE}/build/* /home/buoyante/public_html/admin"
             }
         }
     }
