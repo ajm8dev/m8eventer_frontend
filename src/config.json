@@ -1,5 +1,4 @@
 {
-    "baseurl": "http://localhost:4523/",
-    "baseurl__": "https://apim8event.m8itsolutions.in/",
+   "baseurl": "https://api.buoyantevents.com/",
     "baseurl_": "http://139.59.22.213:4523/"
 }
