@@ -21,8 +21,9 @@ const Sidebar = () => {
                     <span class="ms-1 font-weight-bold">M8 Event Management</span>
                 </Link>
             </div>
-            <hr class="horizontal dark mt-0"></hr>
 
+            <hr class="horizontal dark mt-0"></hr>
+            
             {role !== 'STAFF' ? (
                 <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                     <ul class="navbar-nav">

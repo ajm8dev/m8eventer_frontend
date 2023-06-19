@@ -432,7 +432,7 @@ const Usermanagement = () => {
                                                                         <td>{item?.email}</td>
                                                                         <td>{item?.address}</td>
                                                                         <td>{item?.type}</td>
-                                                                        <td><a href={'/visitor-registration/qr/' + item?.id + '/' + item?.username + '/' + item?.organization + '/' + eventData[0]?.event_name + '/' + eventData[0]?.event_from_date + '/' + eventData[0]?.event_to_date + '/' + eventData[0]?.event_venue + '/' + 'TIME 11AM - 8PM'}>print</a></td>
+                                                                        <td><a href={'/visitor-registration/qr/' + item?.id + '/' + item?.username + '/' + item?.organization + '/' + eventData[0]?.event_name + '/' + eventData[0]?.event_from_date + '/' + eventData[0]?.event_to_date + '/' + eventData[0]?.event_venue + '/' + 'TIME%2011AM%20%2D%208PM'}>print</a></td>
                                                                     </tr>
                                                                 </>
                                                             ) : <p>{state}</p>

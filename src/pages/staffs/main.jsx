@@ -432,7 +432,7 @@ const Event = () => {
                 }
             }
         }
-        
+
         extraComplementaryFunction()
         setComplementData(complementArr)
         setComplementExtraData(complementExtraArr)
@@ -486,10 +486,9 @@ const Event = () => {
     const [eventTypeList, setEventTypeList] = useState([])
 
     useEffect(() => {
-        axios.get(config.baseurl + 'api/organization-type')
+        axios.get(config.baseurl + 'api/organizer/event-type')
             .then((res) => {
-                console.log(res.data)
-                console.log('the data', res.data.data)
+                console.log('event type data', res.data.data)
                 setEventTypeList(res.data.data)
             })
             .catch((err) => {
@@ -503,7 +502,6 @@ const Event = () => {
 
     useEffect(() => {
         axios.get(config.baseurl + 'api/organizer/event-type').then((res) => {
-            console.log('event type dataa ', res.data.data)
             setEventTypeData(res.data.data)
         }).catch((err) => {
             console.log(err)
@@ -579,14 +577,14 @@ const Event = () => {
                                                                         <div>
                                                                             <h5>{data.expo_name}</h5>
                                                                             {/* <p>{data.description}</p> */}
-                                                                            <p style={{marginTop: '30px', marginBottom: '0px'}}>Total Stalls: {data.total_stalls}</p>
+                                                                            <p style={{ marginTop: '30px', marginBottom: '0px' }}>Total Stalls: {data.total_stalls}</p>
                                                                             <p>Available Stalls: {data.available_stalls}</p>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <a href={'./event/event-edit/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-primary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>View & Update</Button></a>
                                                                         <a href={'/super-admin/user-management/' + localStorage.getItem('organization_id') + '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>User Management</Button></a>
-                                                                        <a href={'/visitor-registration/' + localStorage.getItem('organization_id')+ '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Registration</Button></a>
+                                                                        <a href={'/visitor-registration/' + localStorage.getItem('organization_id') + '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Registration</Button></a>
                                                                     </td>
                                                                 </tr>
                                                             )
@@ -614,8 +612,6 @@ const Event = () => {
                             {
                                 eventNameError ? (<div className="card">
                                     <div className="card-body">
-
-
                                         <span style={{ color: 'red', fontSize: '14px' }}>event name cannot be empty</span>
                                     </div>
                                 </div>) : (<div></div>)
@@ -643,26 +639,18 @@ const Event = () => {
                             </div>
                             <div class="mb-3">
                                 <label for="location" class="form-label">Event Type</label>
-
                                 {
-
                                     <Form.Select aria-label="Default select example" onChange={e => { setEventType(e.target.value) }}>
                                         <option value="">select</option>
                                         {
                                             eventTypeList.map((data, i) => {
                                                 return (
-                                                    <option value={data._id}>{data.organization_type}</option>
+                                                    <option value={data._id}>{data.event_type}</option>
                                                 )
                                             })
                                         }
                                     </Form.Select>
-
                                 }
-
-                                {/* <Form.Select aria-label="Default select example">
-                                    <option>select</option>                                    
-                                </Form.Select> */}
-
                             </div>
                         </div>
                         <div class="col-xl-6">

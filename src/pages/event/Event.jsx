@@ -119,66 +119,93 @@ const Event = () => {
     }, [])
 
 
+    const [eventTypeChoose, setEventTypeChoose] = useState('')
+
+
     // Event Creation
 
     const submitEventCreation = (e) => {
         e.preventDefault()
 
-        if (eventName != "") {
 
-            setLoader(true)
+        if(eventTypeChoose === ""){
+            alert('Event Type Cannot be Empty')
+        }else{
+            //
 
-            const formData = new FormData();
+            axios.post(config.baseurl + 'api/organizer/event-type',{
+                event_type: eventTypeChoose
+            },{
+                headers: {
+                    "Authorization": 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then((res) => {
+                console.log(res.data)
 
-            for (var i = 0; i < eventGalleryImagesFile.length; i++) {
-                console.log(eventGalleryImagesFile[i]);
-                formData.append("event_gallery_images", eventGalleryImagesFile[i])
-            }
+                if (eventName != "") {
 
-            for (var i = 0; i < eventLogoFile.length; i++) {
-                console.log(eventLogoFile[i])
-                formData.append("event_logo", eventLogoFile[i])
-            }
-
-            console.log('organization_id ', organzationId)
-
-            formData.append("event_name", eventName)
-            formData.append("event_description", eventDescription)
-            formData.append("event_venue", eventVenue)
-            formData.append('event_from_date', eventDatesFrom)
-            formData.append('event_to_date', eventDatesTo)
-            formData.append('event_type', eventType)
-            formData.append('total_stall', totalStalls)
-            formData.append('stall_sq_ft_price', stallSqftPrice)
-            formData.append('additional_info', additionalInformation)
-            formData.append('organization_id', organzationId)
-            formData.append('created_by', createdBy)
-
-            try {
-                let response = axios({
-                    method: "post",
-                    data: formData,
-                    url: config.baseurl + 'api/organizer/event/web',
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then((res) => {
-                    console.log(res.data)
-                    setEventId(res.data.data._id)
-                    setStallCreationFrmGen(true)
-                    setEventCreationModal(false)
-                    setComplimentryModal(true)
+                setLoader(true)
+    
+                const formData = new FormData();
+    
+                for (var i = 0; i < eventGalleryImagesFile.length; i++) {
+                    console.log(eventGalleryImagesFile[i]);
+                    formData.append("event_gallery_images", eventGalleryImagesFile[i])
+                }
+    
+                for (var i = 0; i < eventLogoFile.length; i++) {
+                    console.log(eventLogoFile[i])
+                    formData.append("event_logo", eventLogoFile[i])
+                }
+    
+                formData.append("event_name", eventName)
+                formData.append("event_description", eventDescription)
+                formData.append("event_venue", eventVenue)
+                formData.append('event_from_date', eventDatesFrom)
+                formData.append('event_to_date', eventDatesTo)
+                formData.append('event_type', eventType)
+                formData.append('total_stall', totalStalls)
+                formData.append('stall_sq_ft_price', stallSqftPrice)
+                formData.append('additional_info', additionalInformation)
+                formData.append('organization_id', organzationId)
+                formData.append('created_by', createdBy)
+                formData.append('event_type', eventTypeChoose)
+    
+                try {
+                    let response = axios({
+                        method: "post",
+                        data: formData,
+                        url: config.baseurl + 'api/organizer/event/web',
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then((res) => {
+                        console.log(res.data)
+                        setEventId(res.data.data._id)
+                        setStallCreationFrmGen(true)
+                        setEventCreationModal(false)
+                        setComplimentryModal(true)
+                        setLoader(false)
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+    
+                } catch (error) {
+                    console.log(error)
                     setLoader(false)
-                }).catch((err) => {
-                    console.log(err)
-                })
-
-            } catch (error) {
-                console.log(error)
+                }
+            } else {
+                setEventNameError(true)
                 setLoader(false)
             }
-        } else {
-            setEventNameError(true)
-            setLoader(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+
+
+
+            
         }
+
+        
     }
 
     useEffect(() => {
@@ -330,30 +357,30 @@ const Event = () => {
         const role = localStorage.getItem('role');
         const user_id = localStorage.getItem('user_id')
 
-        if(role === 'STAFF'){
-            axios.get(config.baseurl + 'api/organizer/event/get-event-fr-staffs/'+user_id)
-            .then((res) => {
-                setEventList(res.data.data)
-                setLoader(false)
-            })
-            .catch((err) => {
-                setLoader(false)
-            })
+        if (role === 'STAFF') {
+            axios.get(config.baseurl + 'api/organizer/event/get-event-fr-staffs/' + user_id)
+                .then((res) => {
+                    setEventList(res.data.data)
+                    setLoader(false)
+                })
+                .catch((err) => {
+                    setLoader(false)
+                })
 
-        }else{
+        } else {
             axios.get(config.baseurl + 'api/organizer/event/')
-            .then((res) => {
-                console.log('event list ', res.data.data.results)
-                setEventList(res.data.data.results)
-                setLoader(false)
-            })
-            .catch((err) => {
-                console.log(err)
-                setLoader(false)
-            })
+                .then((res) => {
+                    console.log('event list ', res.data.data.results)
+                    setEventList(res.data.data.results)
+                    setLoader(false)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    setLoader(false)
+                })
         }
 
-        
+
     }, [triggerEventList])
 
     // Delete Event
@@ -495,10 +522,8 @@ const Event = () => {
     const [eventTypeList, setEventTypeList] = useState([])
 
     useEffect(() => {
-        axios.get(config.baseurl + 'api/organization-type')
+        axios.get(config.baseurl + 'api/organizer/event-type')
             .then((res) => {
-                console.log(res.data)
-                console.log('the data', res.data.data)
                 setEventTypeList(res.data.data)
             })
             .catch((err) => {
@@ -512,7 +537,6 @@ const Event = () => {
 
     useEffect(() => {
         axios.get(config.baseurl + 'api/organizer/event-type').then((res) => {
-            console.log('event type dataa ', res.data.data)
             setEventTypeData(res.data.data)
         }).catch((err) => {
             console.log(err)
@@ -553,7 +577,7 @@ const Event = () => {
                                 <div class="card-header pb-3">
                                     <div class="row">
                                         <div class="col-6 d-flex align-items-center">
-                                            
+
                                             <h6 class="mb-0">Events</h6>
                                         </div>
 
@@ -562,7 +586,7 @@ const Event = () => {
                                             {role !== 'STAFF' && <button type="button" href="/product/add" class="btn bg-gradient-dark" onClick={triggerEventCreaitonModal}>Create an Event</button>}
 
 
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -613,16 +637,16 @@ const Event = () => {
                                                                                         <i className="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>View & Update
                                                                                     </Button>
                                                                                 </a>
-                                                                                
+
                                                                             </>
                                                                         )}
 
 
                                                                         <a href={'/super-admin/user-management/' + localStorage.getItem('organization_id') + '/' + data?._id} className="btn btn-link text-dark px-3 mb-0">
-                                                                                    <Button className="btn btn-secondary">
-                                                                                        <i className="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>User Management
-                                                                                    </Button>
-                                                                                </a>
+                                                                            <Button className="btn btn-secondary">
+                                                                                <i className="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>User Management
+                                                                            </Button>
+                                                                        </a>
 
                                                                         <a href={'/visitor-registration/' + localStorage.getItem('organization_id') + '/' + data._id} class="btn btn-link text-dark px-3 mb-0" ><Button class="btn btn-secondary"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Registration</Button></a>
                                                                     </td>
@@ -682,24 +706,23 @@ const Event = () => {
                             <div class="mb-3">
                                 <label for="location" class="form-label">Event Type</label>
 
-                                {
-
-                                    <Form.Select aria-label="Default select example" onChange={e => { setEventType(e.target.value) }}>
+                                {eventTypeList.length === 0 ? (
+                                    <div class="mb-3">
+                                        {/* <label htmlFor="location" class="form-label">Event Type</label> */}
+                                        <input type="text" class="form-control" id="event_type" placeholder="Event Type"  onChange={(e) => setEventTypeChoose(e.target.value) } />
+                                    </div>
+                                ) : (
+                                    <Form.Select aria-label="Default select example" onChange={e => { setEventTypeChoose(e.target.value) }}>
                                         <option value="">select</option>
                                         {
                                             eventTypeList.map((data, i) => {
                                                 return (
-                                                    <option value={data._id}>{data.organization_type}</option>
-                                                )
+                                                    <option value={data.event_type} key={i}>{data.event_type}</option>
+                                                );
                                             })
                                         }
                                     </Form.Select>
-
-                                }
-
-                                {/* <Form.Select aria-label="Default select example">
-                                    <option>select</option>                                    
-                                </Form.Select> */}
+                                )}
 
                             </div>
                         </div>
