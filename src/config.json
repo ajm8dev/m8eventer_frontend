@@ -1,4 +1,4 @@
 {
-   "baseurl_": "https://api.buoyantevents.com/",
-   "baseurl": "http://localhost:4523/"
+   "baseurl": "https://api.buoyantevents.com/",
+   "baseurl_": "http://localhost:4523/"
 }

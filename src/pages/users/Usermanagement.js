@@ -56,7 +56,7 @@ const Usermanagement = () => {
                         } else if (res.data.data[i].type == 'super-admin') {
                             theOrganizationName = "123"
                         } else {
-                            theOrganizationName = res.data.data[i].organization
+                            theOrganizationName = res.data.data[i]?.organization || ' '
                         }
 
                         if (res.data.data[i].type != 'super-admin') {
@@ -100,7 +100,7 @@ const Usermanagement = () => {
                         } else if (res.data.data[i].type == 'super-admin') {
                             theOrganizationName = "123"
                         } else {
-                            theOrganizationName = res.data.data[i].organization
+                            theOrganizationName = res.data.data[i]?.organization || ' '
                         }
 
                         if (res.data.data[i].type != 'super-admin') {
@@ -150,7 +150,7 @@ const Usermanagement = () => {
                         } else if (res.data.data[i].type == 'super-admin') {
                             theOrganizationName = "123"
                         } else {
-                            theOrganizationName = res.data.data[i].organization
+                            theOrganizationName = res.data.data[i]?.organization || ' '
                         }
 
                         if (res.data.data[i].type != 'super-admin') {
@@ -195,7 +195,7 @@ const Usermanagement = () => {
                     } else if (res.data.data[i].type == 'super-admin') {
                         theOrganizationName = "123"
                     } else {
-                        theOrganizationName = res.data.data[i].organization
+                        theOrganizationName = res.data.data[i]?.organization || ' '
                     }
 
                     if (res.data.data[i].type != 'super-admin') {
@@ -239,7 +239,7 @@ const Usermanagement = () => {
                     } else if (res.data.data[i].type == 'super-admin') {
                         theOrganizationName = "123"
                     } else {
-                        theOrganizationName = res.data.data[i].organization
+                        theOrganizationName = res.data.data[i]?.organization || ' '
                     }
 
                     if (res.data.data[i].type != 'super-admin') {
@@ -281,7 +281,7 @@ const Usermanagement = () => {
                     } else if (res.data.data[i].type == 'super-admin') {
                         theOrganizationName = "123"
                     } else {
-                        theOrganizationName = res.data.data[i].organization
+                        theOrganizationName = res.data.data[i]?.organization || ' '
                     }
 
                     if (res.data.data[i].type != 'super-admin') {
@@ -320,9 +320,9 @@ const Usermanagement = () => {
                         if (res.data.data[i].type == 'visitor') {
                             theOrganizationName = res.data.data[i].organization
                         } else if (res.data.data[i].type == 'super-admin') {
-                            theOrganizationName = "123"
+                            theOrganizationName = " "
                         } else {
-                            theOrganizationName = res.data.data[i].organization
+                            theOrganizationName = res.data.data[i]?.organization || ' '
                         }
 
                         if (res.data.data[i].type != 'super-admin') {
